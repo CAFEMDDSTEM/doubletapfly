@@ -1,0 +1,12 @@
+{
+  "required": false,
+  "package": "com.fluxt.doubletapfly.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "client": [
+    "LocalPlayerMixin",
+    "MinecraftMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 0
+  }
+}
