@@ -35,6 +35,20 @@ public final class KeyBindings {
             InputConstants.UNKNOWN.getValue(),
             CATEGORY);
 
+    /** Unbound by default; players can assign any key they like in the controls screen. */
+    public static final KeyMapping AIR_PLACE = new KeyMapping(
+            "key.doubletapfly.air_place",
+            InputConstants.Type.KEYSYM,
+            InputConstants.UNKNOWN.getValue(),
+            CATEGORY);
+
+    /** Unbound by default; players can assign any key they like in the controls screen. */
+    public static final KeyMapping FAST_USE = new KeyMapping(
+            "key.doubletapfly.fast_use",
+            InputConstants.Type.KEYSYM,
+            InputConstants.UNKNOWN.getValue(),
+            CATEGORY);
+
     private KeyBindings() {}
 
     @SubscribeEvent
@@ -42,5 +56,7 @@ public final class KeyBindings {
         event.registerCategory(CATEGORY);
         event.register(TOGGLE);
         event.register(FAST_PLACE);
+        event.register(AIR_PLACE);
+        event.register(FAST_USE);
     }
 }

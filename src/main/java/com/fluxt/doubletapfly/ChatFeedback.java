@@ -72,6 +72,24 @@ public final class ChatFeedback {
                         .withStyle(nowEnabled ? ChatFormatting.GREEN : ChatFormatting.RED)));
     }
 
+    /** Same colour convention, for the air place switch. */
+    public static void reportAirPlace(boolean nowEnabled) {
+        send(prefix()
+                .append(Component.translatable(nowEnabled
+                                ? "doubletapfly.message.air_place.enabled"
+                                : "doubletapfly.message.air_place.disabled")
+                        .withStyle(nowEnabled ? ChatFormatting.GREEN : ChatFormatting.RED)));
+    }
+
+    /** Same colour convention, for the fast use switch. */
+    public static void reportFastUse(boolean nowEnabled) {
+        send(prefix()
+                .append(Component.translatable(nowEnabled
+                                ? "doubletapfly.message.fast_use.enabled"
+                                : "doubletapfly.message.fast_use.disabled")
+                        .withStyle(nowEnabled ? ChatFormatting.GREEN : ChatFormatting.RED)));
+    }
+
     private static MutableComponent prefix() {
         return Component.translatable("doubletapfly.prefix").withStyle(ChatFormatting.AQUA);
     }

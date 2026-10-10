@@ -2,6 +2,8 @@
   "key.category.doubletapfly.main": "双击空格飞行",
   "key.doubletapfly.toggle": "开关双击空格飞行",
   "key.doubletapfly.fast_place": "开关快速放置",
+  "key.doubletapfly.air_place": "开关悬空放置",
+  "key.doubletapfly.fast_use": "开关快速使用",
 
   "doubletapfly.prefix": "[双击空格飞行] ",
   "doubletapfly.value.on": "开",
@@ -11,6 +13,10 @@
   "doubletapfly.message.disabled": "已关闭",
   "doubletapfly.message.fast_place.enabled": "快速放置：已开启",
   "doubletapfly.message.fast_place.disabled": "快速放置：已关闭",
+  "doubletapfly.message.air_place.enabled": "悬空放置：已开启 —— 对着空气也能放方块",
+  "doubletapfly.message.air_place.disabled": "悬空放置：已关闭",
+  "doubletapfly.message.fast_use.enabled": "快速使用：已开启",
+  "doubletapfly.message.fast_use.disabled": "快速使用：已关闭",
 
   "doubletapfly.message.fly_speed": "飞行速度已设置为 %s 倍",
   "doubletapfly.message.fly_speed.invalid": "无效的速度值：%s",
@@ -20,6 +26,8 @@
   "doubletapfly.message.place_per_tick": "每 tick 放置数量已设置为 %s",
   "doubletapfly.message.anti_kick": "反踢：%s",
   "doubletapfly.message.anti_kick_interval": "反踢间隔已设置为 %s tick",
+  "doubletapfly.message.air_place_render": "悬空放置的红色提示框：%s",
+  "doubletapfly.message.fast_use_cooldown": "使用物品冷却已设置为 %s tick",
   "doubletapfly.message.value.clamped": "数值超出范围，已限制为 %s ~ %s",
   "doubletapfly.message.option.unknown": "未知的配置项：%s",
   "doubletapfly.message.option.invalid_boolean": "需要 true 或 false，收到：%s",
@@ -32,6 +40,8 @@
   "doubletapfly.help.status": "显示当前设置",
   "doubletapfly.help.gui": "打开设置界面（和模组列表里那个「配置」是同一个）",
   "doubletapfly.help.fast_place": "开关快速放置",
+  "doubletapfly.help.air_place": "开关悬空放置（对着空气也能放方块）",
+  "doubletapfly.help.fast_use": "开关快速使用（吃东西 / 扔东西更快）",
   "doubletapfly.help.config_intro": "修改设置，可用的配置项：",
   "doubletapfly.help.flight": "飞行总开关",
   "doubletapfly.help.fly_speed": "飞行速度倍率（0.1 ~ 10）",
@@ -42,6 +52,10 @@
   "doubletapfly.help.place_per_tick": "每 tick 最多放几个方块（1 ~ 12）",
   "doubletapfly.help.anti_kick": "反踢开关，服务器没开 allow-flight 时用",
   "doubletapfly.help.anti_kick_interval": "反踢间隔 tick（10 ~ 75）",
+  "doubletapfly.help.air_place_config": "同 !airplace（可写 true / false / on / off）",
+  "doubletapfly.help.air_place_render": "是否画红色提示框（true / false）",
+  "doubletapfly.help.fast_use_config": "同 !fastuse（可写 true / false / on / off）",
+  "doubletapfly.help.fast_use_cooldown": "使用物品后的冷却 tick（0 ~ 4）",
   "doubletapfly.help.tip": "以上指令都只在本地处理，不会发送到服务器。",
   "doubletapfly.help.unknown_argument": "未知的参数：%s",
   "doubletapfly.help.usage": "输入 !doubletapfly help 查看指令列表。",
@@ -55,6 +69,8 @@
   "doubletapfly.status.place_delay": "放置间隔：%s tick",
   "doubletapfly.status.place_per_tick": "每 tick 放置数量：%s",
   "doubletapfly.status.anti_kick": "反踢：%s（间隔 %s tick）",
+  "doubletapfly.status.air_place": "悬空放置：%s（提示框 %s）",
+  "doubletapfly.status.fast_use": "快速使用：%s（冷却 %s tick）",
 
   "doubletapfly.message.gui.unavailable": "设置界面暂时打不开。",
 
@@ -72,6 +88,12 @@
   "doubletapfly.config.fast_place": "快速放置开关",
   "doubletapfly.config.place_delay": "放置间隔（tick）",
   "doubletapfly.config.blocks_per_tick": "每 tick 放置数量",
+  "doubletapfly.config.section.air_place": "悬空放置",
+  "doubletapfly.config.section.fast_use": "快速使用",
+  "doubletapfly.config.air_place": "悬空放置开关",
+  "doubletapfly.config.air_place_render": "绘制红色提示框",
+  "doubletapfly.config.fast_use": "快速使用开关",
+  "doubletapfly.config.fast_use_cooldown": "使用物品冷却（tick）",
 
   "doubletapfly.config.double_tap_window.tooltip": "两次空格之间允许的间隔，原版创造模式是 7 tick。",
   "doubletapfly.config.fly_speed.tooltip": "1.0 就是原版创造速度。也可以用 !config FlySpeed = 1.5 改。",
@@ -80,5 +102,10 @@
   "doubletapfly.config.anti_kick_interval.tooltip": "每隔多少 tick 做一次下沉，必须小于 80。",
   "doubletapfly.config.fast_place.tooltip": "解除原版每 4 tick 才能放一个方块的限制。",
   "doubletapfly.config.place_delay.tooltip": "两次放置之间等几 tick，原版是 4。",
-  "doubletapfly.config.blocks_per_tick.tooltip": "1 = 只放准星指着的那个；调大会顺带补上周围的方块。"
+  "doubletapfly.config.blocks_per_tick.tooltip": "1 = 只放准星指着的那个；调大会顺带补上周围的方块。",
+
+  "doubletapfly.config.air_place.tooltip": "开启后，准星对着空气按住右键，会在你能摸到的最远处放一个方块。默认关闭，可用 !airplace 打开。",
+  "doubletapfly.config.air_place_render.tooltip": "开启后会在要放置的位置画一个红色方框。",
+  "doubletapfly.config.fast_use.tooltip": "缩短原版使用物品后的 4 tick 冷却，只影响物品，不影响放方块。",
+  "doubletapfly.config.fast_use_cooldown.tooltip": "使用物品后的冷却 tick，原版是 4，0 最快。"
 }

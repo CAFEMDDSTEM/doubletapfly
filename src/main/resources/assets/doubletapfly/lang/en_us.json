@@ -2,6 +2,8 @@
   "key.category.doubletapfly.main": "Double Tap Fly",
   "key.doubletapfly.toggle": "Toggle Double Tap Fly",
   "key.doubletapfly.fast_place": "Toggle Fast Block Placement",
+  "key.doubletapfly.air_place": "Toggle Air Place",
+  "key.doubletapfly.fast_use": "Toggle Fast Use",
 
   "doubletapfly.prefix": "[Double Tap Fly] ",
   "doubletapfly.value.on": "ON",
@@ -11,6 +13,10 @@
   "doubletapfly.message.disabled": "Disabled",
   "doubletapfly.message.fast_place.enabled": "Fast block placement: ON",
   "doubletapfly.message.fast_place.disabled": "Fast block placement: OFF",
+  "doubletapfly.message.air_place.enabled": "Air place: ON - aim at nothing to place in mid air",
+  "doubletapfly.message.air_place.disabled": "Air place: OFF",
+  "doubletapfly.message.fast_use.enabled": "Fast use: ON",
+  "doubletapfly.message.fast_use.disabled": "Fast use: OFF",
 
   "doubletapfly.message.fly_speed": "Fly speed set to %sx",
   "doubletapfly.message.fly_speed.invalid": "Invalid speed value: %s",
@@ -20,6 +26,8 @@
   "doubletapfly.message.place_per_tick": "Blocks per tick set to %s",
   "doubletapfly.message.anti_kick": "Anti-kick: %s",
   "doubletapfly.message.anti_kick_interval": "Anti-kick interval set to %s tick(s)",
+  "doubletapfly.message.air_place_render": "Air place highlight: %s",
+  "doubletapfly.message.fast_use_cooldown": "Item use cooldown set to %s tick(s)",
   "doubletapfly.message.value.clamped": "Value out of range, clamped to %s - %s",
   "doubletapfly.message.option.unknown": "Unknown option: %s",
   "doubletapfly.message.option.invalid_boolean": "Expected true or false, got: %s",
@@ -32,6 +40,8 @@
   "doubletapfly.help.status": "print the current settings",
   "doubletapfly.help.gui": "open the settings screen (same one the mod list opens)",
   "doubletapfly.help.fast_place": "turn fast block placement on / off",
+  "doubletapfly.help.air_place": "turn air place on / off (place blocks in mid air)",
+  "doubletapfly.help.fast_use": "turn fast item use on / off",
   "doubletapfly.help.config_intro": "change a setting, available options:",
   "doubletapfly.help.flight": "flight master switch",
   "doubletapfly.help.fly_speed": "flight speed multiplier (0.1 - 10)",
@@ -42,6 +52,10 @@
   "doubletapfly.help.place_per_tick": "blocks allowed per tick (1 - 12)",
   "doubletapfly.help.anti_kick": "anti-kick for servers without allow-flight",
   "doubletapfly.help.anti_kick_interval": "anti-kick interval in ticks (10 - 75)",
+  "doubletapfly.help.air_place_config": "same as !airplace (true / false / on / off)",
+  "doubletapfly.help.air_place_render": "draw the red highlight (true / false)",
+  "doubletapfly.help.fast_use_config": "same as !fastuse (true / false / on / off)",
+  "doubletapfly.help.fast_use_cooldown": "cooldown after using an item (0 - 4)",
   "doubletapfly.help.tip": "Everything above is handled locally and never sent to the server.",
   "doubletapfly.help.unknown_argument": "Unknown argument: %s",
   "doubletapfly.help.usage": "Type !doubletapfly help to see the command list.",
@@ -55,6 +69,8 @@
   "doubletapfly.status.place_delay": "Place delay: %s tick(s)",
   "doubletapfly.status.place_per_tick": "Blocks per tick: %s",
   "doubletapfly.status.anti_kick": "Anti-kick: %s (every %s tick(s))",
+  "doubletapfly.status.air_place": "Air place: %s (highlight %s)",
+  "doubletapfly.status.fast_use": "Fast use: %s (cooldown %s tick(s))",
 
   "doubletapfly.message.gui.unavailable": "The settings screen is not available yet.",
 
@@ -71,5 +87,12 @@
   "doubletapfly.config.anti_kick_interval": "Anti-kick interval (ticks)",
   "doubletapfly.config.fast_place": "Fast block placement",
   "doubletapfly.config.place_delay": "Placement delay (ticks)",
-  "doubletapfly.config.blocks_per_tick": "Blocks per tick"
+  "doubletapfly.config.blocks_per_tick": "Blocks per tick",
+
+  "doubletapfly.config.section.air_place": "Air place",
+  "doubletapfly.config.section.fast_use": "Fast use",
+  "doubletapfly.config.air_place": "Air place",
+  "doubletapfly.config.air_place_render": "Draw the red highlight",
+  "doubletapfly.config.fast_use": "Fast use",
+  "doubletapfly.config.fast_use_cooldown": "Item use cooldown (ticks)"
 }

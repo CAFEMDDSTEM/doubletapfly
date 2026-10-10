@@ -6,12 +6,14 @@
 - NeoForge：**26.1.2.76**（要求 `[26.1.2.76,)`）
 - Java：**25**
 - 模组 ID：`doubletapfly`
-- 版本：**1.4.0**
+- 版本：**1.5.0**
 
 ## 功能一览
 
 - **双击空格飞行** —— 和创造模式完全一样的物理。
 - **快速放置** —— 解除原版每 4 tick 才能放一个方块的冷却，可选一次放多个。
+- **悬空放置** —— 对着空气也能放方块，选中位置用红色方框标出。
+- **快速使用** —— 吃东西 / 扔末影珍珠 / 扔药水更快，和放方块分开控制。
 - **可自定义按键** —— 「选项 → 控制 → 按键控制」里多出「双击空格飞行」分类。
 - **指令为主** —— 所有设置都能用聊天指令改和查：`!doubletapfly help` / `status`、`!fastplace`、`!config ...`。
 - **原生设置界面** —— 用的是 NeoForge 自带、由配置自动生成的 Minecraft 原生界面（不是自制 GUI），也可以随时用指令解决。
@@ -52,10 +54,28 @@ NeoForge 上要用它的非官方移植：
 
 把这两个和本模组一起放进 `mods/` 就能同时用投影 + 飞行 + 快速放置。
 
+## 三、悬空放置
+
+对着空气按住右键，会在你**能摸到的最远处**放一个方块 —— 不需要旁边有参照方块。
+
+原理不复杂：原版判断放置位置时，会先看准星指着的那个方块**能不能被替换**（`canBeReplaced`），
+能替换就把方块放进它自己那一格，不能才放到相邻格。空气永远可以被替换，所以只要把「准星
+打空了」这件事变成「准星指着终点那一格」，服务端就会照常接受这个放置。
+
+开启后，待放置的位置会画一个**红色方框**（`AirPlaceRender = false` 可以关掉）。
+默认是关闭的，用 `!airplace` 或 `!config AirPlace = true` 打开。
+
+## 四、快速使用
+
+原版的 4 tick 冷却不只限制放方块，也限制**使用物品** —— 食物、药水、末影珍珠、雪球等等
+用完后都要等 4 tick。这一项把那段冷却缩短，`FastUseCooldown` 默认 0（最快）。
+
+它和快速放置是两个独立开关：`!fastplace` 管放方块，`!fastuse` 管用物品，互不影响。
+
 ## 安装
 
 1. 玩家安装 NeoForge **26.1.2.76**（或更高的 26.1.x）。
-2. 把 `doubletapfly-26.1.2-1.4.0.jar` 放进 `.minecraft/mods/`。
+2. 把 `doubletapfly-26.1.2-1.5.0.jar` 放进 `.minecraft/mods/`。
 3. 进入服务器，双击空格即可飞行；按住右键就是快速放置。
 
 ## 按键设置
@@ -66,6 +86,8 @@ NeoForge 上要用它的非官方移植：
 |---|---|---|
 | 开关双击空格飞行 | 右 Shift | 打开 / 关闭飞行功能 |
 | 开关快速放置 | 未绑定 | 打开 / 关闭快速放置 |
+| 开关悬空放置 | 未绑定 | 打开 / 关闭悬空放置 |
+| 开关快速使用 | 未绑定 | 打开 / 关闭快速使用 |
 
 点一下就能重新绑定成任意按键（和原版按键完全一样的操作）。
 
@@ -83,6 +105,8 @@ NeoForge 上要用它的非官方移植：
 | `!doubletapfly status` | 打印当前所有设置（开/关用绿/红标出）|
 | `!doubletapfly gui` | 打开设置界面（和模组列表里那个「配置」是同一个）|
 | `!fastplace` | 开关快速放置（绿色 / 红色）|
+| `!airplace` | 开关悬空放置（绿色 / 红色）|
+| `!fastuse` | 开关快速使用（绿色 / 红色）|
 | `!config Flight = true` | 飞行总开关（等同 `!doubletapfly`）|
 | `!config FlySpeed = 1` | 飞行速度倍率（0.1 ~ 10，1 = 原版创造速度）|
 | `!config DoubleTapWindow = 7` | 双击判定窗口 tick（2 ~ 20）|
@@ -92,6 +116,10 @@ NeoForge 上要用它的非官方移植：
 | `!config PlacePerTick = 4` | 每 tick 最多放几个方块（1 ~ 12，默认 1）|
 | `!config AntiKick = true` | 反踢开关（服务器没开 allow-flight 时用）|
 | `!config AntiKickInterval = 40` | 反踢间隔 tick（10 ~ 75）|
+| `!config AirPlace = true` | 悬空放置开关（等同 `!airplace`）|
+| `!config AirPlaceRender = true` | 是否画红色提示框（true / false）|
+| `!config FastUse = true` | 快速使用开关（等同 `!fastuse`）|
+| `!config FastUseCooldown = 0` | 使用物品后的冷却 tick（0 ~ 4，原版是 4）|
 
 数值超出范围会自动收进范围并给黄色提示；指令写错会给红色错误，并提示你输入 `!doubletapfly help`。
 所有设置都会立刻生效并写回配置文件。
@@ -152,7 +180,7 @@ Minecraft 原生的开关 / 滑块 / 列表，中英文标签和提示都做了�
 ```bash
 # 需要 JDK 25
 ./gradlew build
-# 产物：build/libs/doubletapfly-26.1.2-1.4.0.jar
+# 产物：build/libs/doubletapfly-26.1.2-1.5.0.jar
 ```
 
 开发环境里启动客户端：

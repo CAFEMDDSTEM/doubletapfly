@@ -19,6 +19,8 @@ public final class DoubleTapFlyConfig {
     public static final int MAX_DOUBLE_TAP_WINDOW = 20;
     public static final int MIN_ANTI_KICK_INTERVAL = 10;
     public static final int MAX_ANTI_KICK_INTERVAL = 75;
+    public static final int MIN_USE_COOLDOWN = 0;
+    public static final int MAX_USE_COOLDOWN = 4;
 
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.BooleanValue ENABLED;
@@ -30,6 +32,10 @@ public final class DoubleTapFlyConfig {
     public static final ModConfigSpec.BooleanValue FAST_PLACE_ENABLED;
     public static final ModConfigSpec.IntValue FAST_PLACE_DELAY;
     public static final ModConfigSpec.IntValue FAST_PLACE_BLOCKS_PER_TICK;
+    public static final ModConfigSpec.BooleanValue AIR_PLACE_ENABLED;
+    public static final ModConfigSpec.BooleanValue AIR_PLACE_RENDER;
+    public static final ModConfigSpec.BooleanValue FAST_USE_ENABLED;
+    public static final ModConfigSpec.IntValue FAST_USE_COOLDOWN;
 
     static {
         ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
@@ -94,6 +100,36 @@ public final class DoubleTapFlyConfig {
                         "Higher values also fill the ring of blocks around the one you are aiming at.")
                 .translation("doubletapfly.config.blocks_per_tick")
                 .defineInRange("blocks_per_tick", 1, MIN_BLOCKS_PER_TICK, MAX_BLOCKS_PER_TICK);
+        builder.pop();
+
+        builder.comment(
+                "Air place. Lets you place blocks in mid air, at the far end of your reach,",
+                "by aiming at nothing. The spot is highlighted in red while it is active.")
+                .translation("doubletapfly.config.section.air_place")
+                .push("air_place");
+        AIR_PLACE_ENABLED = builder
+                .comment("Master switch for air place. Off by default, switch it on with !airplace.")
+                .translation("doubletapfly.config.air_place")
+                .define("enabled", false);
+        AIR_PLACE_RENDER = builder
+                .comment("Draw a red box around the spot the block would be placed at.")
+                .translation("doubletapfly.config.air_place_render")
+                .define("render", true);
+        builder.pop();
+
+        builder.comment(
+                "Fast use. Shortens the vanilla 4 tick cooldown that applies after you use an item,",
+                "so food, potions, pearls and similar can be used again much sooner.")
+                .translation("doubletapfly.config.section.fast_use")
+                .push("fast_use");
+        FAST_USE_ENABLED = builder
+                .comment("Master switch for fast use. Only affects items, not block placement.")
+                .translation("doubletapfly.config.fast_use")
+                .define("enabled", true);
+        FAST_USE_COOLDOWN = builder
+                .comment("Cooldown in ticks after using an item. Vanilla uses 4, 0 is as fast as it gets.")
+                .translation("doubletapfly.config.fast_use_cooldown")
+                .defineInRange("cooldown", 0, MIN_USE_COOLDOWN, MAX_USE_COOLDOWN);
         builder.pop();
 
         SPEC = builder.build();
@@ -219,5 +255,51 @@ public final class DoubleTapFlyConfig {
 
     public static void setFastPlaceBlocksPerTick(int blocks) {
         write(FAST_PLACE_BLOCKS_PER_TICK, blocks);
+    }
+
+    public static boolean airPlaceEnabled() {
+        return readBoolean(AIR_PLACE_ENABLED, false);
+    }
+
+    /** Flips air place and returns its new state. */
+    public static boolean toggleAirPlace() {
+        boolean newValue = !airPlaceEnabled();
+        write(AIR_PLACE_ENABLED, newValue);
+        return newValue;
+    }
+
+    public static void setAirPlaceEnabled(boolean enabled) {
+        write(AIR_PLACE_ENABLED, enabled);
+    }
+
+    public static boolean airPlaceRender() {
+        return readBoolean(AIR_PLACE_RENDER, true);
+    }
+
+    public static void setAirPlaceRender(boolean enabled) {
+        write(AIR_PLACE_RENDER, enabled);
+    }
+
+    public static boolean fastUseEnabled() {
+        return readBoolean(FAST_USE_ENABLED, true);
+    }
+
+    /** Flips fast use and returns its new state. */
+    public static boolean toggleFastUse() {
+        boolean newValue = !fastUseEnabled();
+        write(FAST_USE_ENABLED, newValue);
+        return newValue;
+    }
+
+    public static void setFastUseEnabled(boolean enabled) {
+        write(FAST_USE_ENABLED, enabled);
+    }
+
+    public static int fastUseCooldown() {
+        return readInt(FAST_USE_COOLDOWN, 0);
+    }
+
+    public static void setFastUseCooldown(int ticks) {
+        write(FAST_USE_COOLDOWN, ticks);
     }
 }

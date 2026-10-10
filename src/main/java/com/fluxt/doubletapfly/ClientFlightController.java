@@ -56,7 +56,14 @@ public final class ClientFlightController {
         while (KeyBindings.FAST_PLACE.consumeClick()) {
             ChatFeedback.reportFastPlace(DoubleTapFlyConfig.toggleFastPlace());
         }
+        while (KeyBindings.AIR_PLACE.consumeClick()) {
+            ChatFeedback.reportAirPlace(DoubleTapFlyConfig.toggleAirPlace());
+        }
+        while (KeyBindings.FAST_USE.consumeClick()) {
+            ChatFeedback.reportFastUse(DoubleTapFlyConfig.toggleFastUse());
+        }
         ChatCommands.openPendingScreen();
+        AirPlaceHelper.tick(minecraft);
 
         LocalPlayer player = minecraft.player;
 
