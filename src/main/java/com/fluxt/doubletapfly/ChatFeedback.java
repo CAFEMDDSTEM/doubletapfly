@@ -54,6 +54,11 @@ public final class ChatFeedback {
         send(Component.literal("  ").append(message.copy().withStyle(ChatFormatting.GRAY)));
     }
 
+    /** One player list row. The caller colours the parts, so nothing is overridden here. */
+    public static void playerLine(Component message) {
+        send(Component.literal("  ").append(message));
+    }
+
     /** Green when the feature was switched on, red when it was switched off. */
     public static void reportToggle(boolean nowEnabled) {
         send(prefix()

@@ -21,6 +21,8 @@ public final class DoubleTapFlyConfig {
     public static final int MAX_ANTI_KICK_INTERVAL = 75;
     public static final int MIN_USE_COOLDOWN = 0;
     public static final int MAX_USE_COOLDOWN = 4;
+    public static final double MIN_PLAYER_LIST_RANGE = 0.0D;
+    public static final double MAX_PLAYER_LIST_RANGE = 512.0D;
 
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.BooleanValue ENABLED;
@@ -36,6 +38,8 @@ public final class DoubleTapFlyConfig {
     public static final ModConfigSpec.BooleanValue AIR_PLACE_RENDER;
     public static final ModConfigSpec.BooleanValue FAST_USE_ENABLED;
     public static final ModConfigSpec.IntValue FAST_USE_COOLDOWN;
+    public static final ModConfigSpec.DoubleValue PLAYER_LIST_RANGE;
+    public static final ModConfigSpec.BooleanValue PLAYER_LIST_SELF;
 
     static {
         ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
@@ -130,6 +134,23 @@ public final class DoubleTapFlyConfig {
                 .comment("Cooldown in ticks after using an item. Vanilla uses 4, 0 is as fast as it gets.")
                 .translation("doubletapfly.config.fast_use_cooldown")
                 .defineInRange("cooldown", 0, MIN_USE_COOLDOWN, MAX_USE_COOLDOWN);
+        builder.pop();
+
+        builder.comment(
+                "Player list. Prints the position of every other player the client knows about into",
+                "the chat, with the distance to you, and makes the coordinates click to copy.",
+                "Only players in your own dimension and inside the server's player tracking range",
+                "ever reach the client, so that is also all this can show.")
+                .translation("doubletapfly.config.section.player_list")
+                .push("player_list");
+        PLAYER_LIST_RANGE = builder
+                .comment("Only list players closer than this. 0 means no limit.")
+                .translation("doubletapfly.config.player_list_range")
+                .defineInRange("range", 0.0D, MIN_PLAYER_LIST_RANGE, MAX_PLAYER_LIST_RANGE);
+        PLAYER_LIST_SELF = builder
+                .comment("Also list yourself.")
+                .translation("doubletapfly.config.player_list_self")
+                .define("include_self", false);
         builder.pop();
 
         SPEC = builder.build();
@@ -301,5 +322,21 @@ public final class DoubleTapFlyConfig {
 
     public static void setFastUseCooldown(int ticks) {
         write(FAST_USE_COOLDOWN, ticks);
+    }
+
+    public static double playerListRange() {
+        return readDouble(PLAYER_LIST_RANGE, 0.0D);
+    }
+
+    public static void setPlayerListRange(double blocks) {
+        write(PLAYER_LIST_RANGE, blocks);
+    }
+
+    public static boolean playerListIncludeSelf() {
+        return readBoolean(PLAYER_LIST_SELF, false);
+    }
+
+    public static void setPlayerListIncludeSelf(boolean include) {
+        write(PLAYER_LIST_SELF, include);
     }
 }

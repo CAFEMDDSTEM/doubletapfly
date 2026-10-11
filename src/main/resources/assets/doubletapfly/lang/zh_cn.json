@@ -4,6 +4,7 @@
   "key.doubletapfly.fast_place": "开关快速放置",
   "key.doubletapfly.air_place": "开关悬空放置",
   "key.doubletapfly.fast_use": "开关快速使用",
+  "key.doubletapfly.player_list": "输出玩家坐标",
 
   "doubletapfly.prefix": "[双击空格飞行] ",
   "doubletapfly.value.on": "开",
@@ -28,6 +29,8 @@
   "doubletapfly.message.anti_kick_interval": "反踢间隔已设置为 %s tick",
   "doubletapfly.message.air_place_render": "悬空放置的红色提示框：%s",
   "doubletapfly.message.fast_use_cooldown": "使用物品冷却已设置为 %s tick",
+  "doubletapfly.message.player_list_range": "玩家列表范围已设置为 %s（0 = 不限）",
+  "doubletapfly.message.player_list_self": "列表中包含自己：%s",
   "doubletapfly.message.value.clamped": "数值超出范围，已限制为 %s ~ %s",
   "doubletapfly.message.option.unknown": "未知的配置项：%s",
   "doubletapfly.message.option.invalid_boolean": "需要 true 或 false，收到：%s",
@@ -42,6 +45,7 @@
   "doubletapfly.help.fast_place": "开关快速放置",
   "doubletapfly.help.air_place": "开关悬空放置（对着空气也能放方块）",
   "doubletapfly.help.fast_use": "开关快速使用（吃东西 / 扔东西更快）",
+  "doubletapfly.help.players": "在聊天栏列出已知玩家的坐标和距离",
   "doubletapfly.help.config_intro": "修改设置，可用的配置项：",
   "doubletapfly.help.flight": "飞行总开关",
   "doubletapfly.help.fly_speed": "飞行速度倍率（0.1 ~ 10）",
@@ -56,6 +60,8 @@
   "doubletapfly.help.air_place_render": "是否画红色提示框（true / false）",
   "doubletapfly.help.fast_use_config": "同 !fastuse（可写 true / false / on / off）",
   "doubletapfly.help.fast_use_cooldown": "使用物品后的冷却 tick（0 ~ 4）",
+  "doubletapfly.help.player_list_range": "只列出这个距离内的玩家（0 ~ 512，0 = 不限）",
+  "doubletapfly.help.player_list_self": "列表里是否包含自己（true / false）",
   "doubletapfly.help.tip": "以上指令都只在本地处理，不会发送到服务器。",
   "doubletapfly.help.unknown_argument": "未知的参数：%s",
   "doubletapfly.help.usage": "输入 !doubletapfly help 查看指令列表。",
@@ -71,6 +77,15 @@
   "doubletapfly.status.anti_kick": "反踢：%s（间隔 %s tick）",
   "doubletapfly.status.air_place": "悬空放置：%s（提示框 %s）",
   "doubletapfly.status.fast_use": "快速使用：%s（冷却 %s tick）",
+  "doubletapfly.status.player_list": "玩家列表：范围 %s（0 = 不限），含自己 %s",
+
+  "doubletapfly.players.header": "玩家坐标（%s 人，按距离从近到远）",
+  "doubletapfly.players.none": "当前客户端没有已知的其他玩家。",
+  "doubletapfly.players.no_world": "你还没进入世界。",
+  "doubletapfly.players.distance": "%s 格",
+  "doubletapfly.players.copy_name": "点击复制名字",
+  "doubletapfly.players.copy_coords": "点击复制坐标",
+  "doubletapfly.players.hint": "点击名字或坐标即可复制。只有和你同维度、且在服务端追踪范围内的玩家才会出现在这里。",
 
   "doubletapfly.message.gui.unavailable": "设置界面暂时打不开。",
 
@@ -107,5 +122,11 @@
   "doubletapfly.config.air_place.tooltip": "开启后，准星对着空气按住右键，会在你能摸到的最远处放一个方块。默认关闭，可用 !airplace 打开。",
   "doubletapfly.config.air_place_render.tooltip": "开启后会在要放置的位置画一个红色方框。",
   "doubletapfly.config.fast_use.tooltip": "缩短原版使用物品后的 4 tick 冷却，只影响物品，不影响放方块。",
-  "doubletapfly.config.fast_use_cooldown.tooltip": "使用物品后的冷却 tick，原版是 4，0 最快。"
+  "doubletapfly.config.fast_use_cooldown.tooltip": "使用物品后的冷却 tick，原版是 4，0 最快。",
+
+  "doubletapfly.config.section.player_list": "玩家列表",
+  "doubletapfly.config.player_list_range": "范围（0 = 不限）",
+  "doubletapfly.config.player_list_self": "包含自己",
+  "doubletapfly.config.player_list_range.tooltip": "只列出这个距离内的玩家，0 表示不限制。",
+  "doubletapfly.config.player_list_self.tooltip": "把自己也列进玩家列表里。"
 }

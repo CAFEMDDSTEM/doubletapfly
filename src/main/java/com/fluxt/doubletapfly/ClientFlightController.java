@@ -62,6 +62,9 @@ public final class ClientFlightController {
         while (KeyBindings.FAST_USE.consumeClick()) {
             ChatFeedback.reportFastUse(DoubleTapFlyConfig.toggleFastUse());
         }
+        while (KeyBindings.PLAYER_LIST.consumeClick()) {
+            PlayerListHelper.sendPlayerList();
+        }
         ChatCommands.openPendingScreen();
         AirPlaceHelper.tick(minecraft);
 

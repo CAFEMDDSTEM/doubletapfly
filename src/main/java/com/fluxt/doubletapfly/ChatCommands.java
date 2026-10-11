@@ -27,6 +27,7 @@ import org.jspecify.annotations.Nullable;
  *   <li>{@code !fastplace} - switch fast block placement on/off</li>
  *   <li>{@code !airplace} - switch air place on/off</li>
  *   <li>{@code !fastuse} - switch fast item use on/off</li>
+ *   <li>{@code !players} - print the other players' positions and distances</li>
  *   <li>{@code !config <option> = <value>} - change any setting</li>
  * </ul>
  */
@@ -37,6 +38,7 @@ public final class ChatCommands {
     private static final String FAST_PLACE_COMMAND = "fastplace";
     private static final String AIR_PLACE_COMMAND = "airplace";
     private static final String FAST_USE_COMMAND = "fastuse";
+    private static final String PLAYERS_COMMAND = "players";
     private static final String CONFIG_COMMAND = "config";
     private static final String HELP_ARGUMENT = "help";
     private static final String STATUS_ARGUMENT = "status";
@@ -110,6 +112,18 @@ public final class ChatCommands {
             return;
         }
 
+        if (isCommand(body, PLAYERS_COMMAND)) {
+            String argument = body.substring(PLAYERS_COMMAND.length()).trim();
+            event.setCanceled(true);
+            ChatFeedback.echo(message);
+            if (argument.isEmpty()) {
+                PlayerListHelper.sendPlayerList();
+            } else {
+                unknownArgument(argument);
+            }
+            return;
+        }
+
         if (isCommand(body, CONFIG_COMMAND)) {
             event.setCanceled(true);
             ChatFeedback.echo(message);
@@ -176,6 +190,8 @@ public final class ChatCommands {
             case "airplacerender" -> setAirPlaceRender(value);
             case "fastuse" -> setFastUse(value);
             case "fastusecooldown" -> setFastUseCooldown(value);
+            case "playerlistrange" -> setPlayerListRange(value);
+            case "playerlistself" -> setPlayerListSelf(value);
             default -> ChatFeedback.failure(
                     Component.translatable("doubletapfly.message.option.unknown", option));
         }
@@ -345,6 +361,33 @@ public final class ChatCommands {
         }
     }
 
+    private static void setPlayerListRange(String rawValue) {
+        Double value = parseDouble(rawValue);
+        if (value == null) {
+            invalidNumber(rawValue);
+            return;
+        }
+
+        double clamped = clamp(value, DoubleTapFlyConfig.MIN_PLAYER_LIST_RANGE,
+                DoubleTapFlyConfig.MAX_PLAYER_LIST_RANGE);
+        DoubleTapFlyConfig.setPlayerListRange(clamped);
+        ChatFeedback.success(Component.translatable("doubletapfly.message.player_list_range", format(clamped)));
+        if (clamped != value) {
+            clampedNotice(DoubleTapFlyConfig.MIN_PLAYER_LIST_RANGE,
+                    DoubleTapFlyConfig.MAX_PLAYER_LIST_RANGE);
+        }
+    }
+
+    private static void setPlayerListSelf(String rawValue) {
+        Boolean value = parseBoolean(rawValue);
+        if (value == null) {
+            invalidBoolean(rawValue);
+            return;
+        }
+        DoubleTapFlyConfig.setPlayerListIncludeSelf(value);
+        ChatFeedback.success(Component.translatable("doubletapfly.message.player_list_self", onOff(value)));
+    }
+
     // -------------------------------------------------------------------- help
 
     private static void sendHelp() {
@@ -356,6 +399,7 @@ public final class ChatCommands {
         ChatFeedback.helpLine("!fastplace", Component.translatable("doubletapfly.help.fast_place"));
         ChatFeedback.helpLine("!airplace", Component.translatable("doubletapfly.help.air_place"));
         ChatFeedback.helpLine("!fastuse", Component.translatable("doubletapfly.help.fast_use"));
+        ChatFeedback.helpLine("!players", Component.translatable("doubletapfly.help.players"));
         ChatFeedback.helpLine("!config <option> = <value>",
                 Component.translatable("doubletapfly.help.config_intro"));
         ChatFeedback.helpLine("  FlySpeed = 1", Component.translatable("doubletapfly.help.fly_speed"));
@@ -375,6 +419,10 @@ public final class ChatCommands {
         ChatFeedback.helpLine("  FastUse = true", Component.translatable("doubletapfly.help.fast_use_config"));
         ChatFeedback.helpLine("  FastUseCooldown = 0",
                 Component.translatable("doubletapfly.help.fast_use_cooldown"));
+        ChatFeedback.helpLine("  PlayerListRange = 0",
+                Component.translatable("doubletapfly.help.player_list_range"));
+        ChatFeedback.helpLine("  PlayerListSelf = false",
+                Component.translatable("doubletapfly.help.player_list_self"));
         ChatFeedback.helpLine("  Flight = true", Component.translatable("doubletapfly.help.flight"));
         ChatFeedback.tip(Component.translatable("doubletapfly.help.tip"));
     }
@@ -402,6 +450,9 @@ public final class ChatCommands {
                 onOff(DoubleTapFlyConfig.airPlaceRender())));
         ChatFeedback.statusLine(Component.translatable("doubletapfly.status.fast_use",
                 onOff(DoubleTapFlyConfig.fastUseEnabled()), DoubleTapFlyConfig.fastUseCooldown()));
+        ChatFeedback.statusLine(Component.translatable("doubletapfly.status.player_list",
+                format(DoubleTapFlyConfig.playerListRange()),
+                onOff(DoubleTapFlyConfig.playerListIncludeSelf())));
     }
 
     private static void unknownArgument(String argument) {

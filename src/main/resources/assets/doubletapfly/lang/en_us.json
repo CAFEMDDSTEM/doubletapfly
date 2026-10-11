@@ -4,6 +4,7 @@
   "key.doubletapfly.fast_place": "Toggle Fast Block Placement",
   "key.doubletapfly.air_place": "Toggle Air Place",
   "key.doubletapfly.fast_use": "Toggle Fast Use",
+  "key.doubletapfly.player_list": "Print Player Positions",
 
   "doubletapfly.prefix": "[Double Tap Fly] ",
   "doubletapfly.value.on": "ON",
@@ -28,6 +29,8 @@
   "doubletapfly.message.anti_kick_interval": "Anti-kick interval set to %s tick(s)",
   "doubletapfly.message.air_place_render": "Air place highlight: %s",
   "doubletapfly.message.fast_use_cooldown": "Item use cooldown set to %s tick(s)",
+  "doubletapfly.message.player_list_range": "Player list range set to %s (0 = no limit)",
+  "doubletapfly.message.player_list_self": "List yourself: %s",
   "doubletapfly.message.value.clamped": "Value out of range, clamped to %s - %s",
   "doubletapfly.message.option.unknown": "Unknown option: %s",
   "doubletapfly.message.option.invalid_boolean": "Expected true or false, got: %s",
@@ -42,6 +45,7 @@
   "doubletapfly.help.fast_place": "turn fast block placement on / off",
   "doubletapfly.help.air_place": "turn air place on / off (place blocks in mid air)",
   "doubletapfly.help.fast_use": "turn fast item use on / off",
+  "doubletapfly.help.players": "print every known player's position and distance",
   "doubletapfly.help.config_intro": "change a setting, available options:",
   "doubletapfly.help.flight": "flight master switch",
   "doubletapfly.help.fly_speed": "flight speed multiplier (0.1 - 10)",
@@ -56,6 +60,8 @@
   "doubletapfly.help.air_place_render": "draw the red highlight (true / false)",
   "doubletapfly.help.fast_use_config": "same as !fastuse (true / false / on / off)",
   "doubletapfly.help.fast_use_cooldown": "cooldown after using an item (0 - 4)",
+  "doubletapfly.help.player_list_range": "only list players closer than this (0 - 512, 0 = all)",
+  "doubletapfly.help.player_list_self": "include yourself in the list (true / false)",
   "doubletapfly.help.tip": "Everything above is handled locally and never sent to the server.",
   "doubletapfly.help.unknown_argument": "Unknown argument: %s",
   "doubletapfly.help.usage": "Type !doubletapfly help to see the command list.",
@@ -71,6 +77,15 @@
   "doubletapfly.status.anti_kick": "Anti-kick: %s (every %s tick(s))",
   "doubletapfly.status.air_place": "Air place: %s (highlight %s)",
   "doubletapfly.status.fast_use": "Fast use: %s (cooldown %s tick(s))",
+  "doubletapfly.status.player_list": "Player list: range %s (0 = all), include self %s",
+
+  "doubletapfly.players.header": "Players (%s, nearest first)",
+  "doubletapfly.players.none": "No other players known to this client right now.",
+  "doubletapfly.players.no_world": "You are not in a world.",
+  "doubletapfly.players.distance": "%s blocks",
+  "doubletapfly.players.copy_name": "Click to copy the name",
+  "doubletapfly.players.copy_coords": "Click to copy the coordinates",
+  "doubletapfly.players.hint": "Click a name or a coordinate to copy it. Only players in your own dimension and near you are known to the client.",
 
   "doubletapfly.message.gui.unavailable": "The settings screen is not available yet.",
 
@@ -94,5 +109,9 @@
   "doubletapfly.config.air_place": "Air place",
   "doubletapfly.config.air_place_render": "Draw the red highlight",
   "doubletapfly.config.fast_use": "Fast use",
-  "doubletapfly.config.fast_use_cooldown": "Item use cooldown (ticks)"
+  "doubletapfly.config.fast_use_cooldown": "Item use cooldown (ticks)",
+
+  "doubletapfly.config.section.player_list": "Player list",
+  "doubletapfly.config.player_list_range": "Range (0 = no limit)",
+  "doubletapfly.config.player_list_self": "Include yourself"
 }

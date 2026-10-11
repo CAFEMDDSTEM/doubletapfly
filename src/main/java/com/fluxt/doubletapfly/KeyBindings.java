@@ -49,6 +49,13 @@ public final class KeyBindings {
             InputConstants.UNKNOWN.getValue(),
             CATEGORY);
 
+    /** Unbound by default; prints the player list when pressed. */
+    public static final KeyMapping PLAYER_LIST = new KeyMapping(
+            "key.doubletapfly.player_list",
+            InputConstants.Type.KEYSYM,
+            InputConstants.UNKNOWN.getValue(),
+            CATEGORY);
+
     private KeyBindings() {}
 
     @SubscribeEvent
@@ -58,5 +65,6 @@ public final class KeyBindings {
         event.register(FAST_PLACE);
         event.register(AIR_PLACE);
         event.register(FAST_USE);
+        event.register(PLAYER_LIST);
     }
 }
