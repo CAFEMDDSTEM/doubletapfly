@@ -23,8 +23,14 @@ import org.jspecify.annotations.Nullable;
  * "moved too quickly" and the player is snapped straight back. {@code allow-flight} has nothing to
  * do with this check - it only disables the "flying is not enabled" kick.</p>
  *
- * <p>So short hops land, and long jumps get undone by the server unless it is running something
- * that turns that check off. The chat feedback says so whenever a jump looks too long.</p>
+ * <p>So short hops land and long jumps get undone - unless the server turns that check off, which a
+ * vanilla server can do without any mod, plugin or datapack:</p>
+ *
+ * <pre>/gamerule player_movement_check false</pre>
+ *
+ * <p>{@code shouldCheckPlayerMovement} reads exactly that rule and skips the whole distance check
+ * when it is false. {@code allow-flight} has nothing to do with it. The chat feedback mentions this
+ * whenever a jump looks too long.</p>
  */
 public final class TeleportHelper {
 

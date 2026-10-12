@@ -6,7 +6,7 @@
 - NeoForge：**26.1.2.76**（要求 `[26.1.2.76,)`）
 - Java：**25**
 - 模组 ID：`doubletapfly`
-- 版本：**1.7.0**
+- 版本：**1.7.1**
 
 ## 功能一览
 
@@ -67,6 +67,19 @@ NeoForge 上要用它的非官方移植：
 开启后，待放置的位置会画一个**红色方框**（`AirPlaceRender = false` 可以关掉）。
 默认是关闭的，用 `!airplace` 或 `!config AirPlace = true` 打开。
 
+### 怎么用（步骤）
+
+1. **先打开它** —— 默认是关的。聊天框输入 `!airplace`，看到绿色的「悬空放置：已开启」才算开。
+   也可以在「选项 → 控制 → 按键控制」里给「开关悬空放置」绑一个键，或者在设置界面里勾。
+2. **手上拿方块**（`BlockItem`；刷怪蛋、盔甲架、烟花也可以）。空手或者拿食物之类的不生效。
+3. **准星对着空气** —— 也就是前方没有可点击的方块，准星打在虚空/天空里。
+   （如果准星指着方块，那就是普通放置，走原版逻辑。）
+4. 这时你能触及的最远处那一格会出现**红色方框**，就是你这次要放的位置。
+   没看到框说明条件没满足：要么开关没开、要么手上不是方块、要么准星其实指着东西。
+5. **按住右键**，方块会放到红框那一格。
+
+配合快速放置（默认开着）手感会好很多：准星扫过去，一次能铺一串。
+
 ## 四、快速使用
 
 原版的 4 tick 冷却不只限制放方块，也限制**使用物品** —— 食物、药水、末影珍珠、雪球等等
@@ -121,17 +134,44 @@ NeoForge 上要用它的非官方移植：
 > **并且 `allow-flight=true` 关不掉这个校验** —— 它只管「悬空超过 4 秒踢人」那一条，
 > 跟移动距离校验是两个独立的检查。服务端只要还是原版（或 Paper/Spigot），这条就一定在。
 >
-> 所以：**近距离（10 格内）能过，远距离会被拉回**。模组会在距离超阈值时于聊天栏给出黄色提示
-> （阈值可用 `!config TeleportWarn = 100` 调整，0 关闭）。
+> 所以默认情况下：**近距离（约 10 格内）能过，远距离会被拉回**。模组会在距离超阈值时于聊天栏
+> 给出黄色提示（阈值可用 `!config TeleportWarn = 100` 调整，0 关闭）。
 
-如果目标是「让非 OP 玩家能真正远距离传送」，纯客户端做不到 —— 需要服务端配合。
-在原版服务端上最轻量的做法是**数据包（datapack）+ `/trigger`**：给玩家一个记分板触发器，
-玩家用 `/trigger` 提交坐标，函数再执行 `/tp`。数据包不需要插件、不需要模组，vanilla 客户端也能用。
+### ✅ 解决办法：一条原版游戏规则
+
+那整段距离校验外面还包着一层开关：
+
+```java
+private boolean shouldCheckPlayerMovement(boolean isFallFlying) {
+    ...
+    GameRules gameRules = this.player.level().getGameRules();
+    return !gameRules.get(GameRules.PLAYER_MOVEMENT_CHECK) ? false : ...;
+}
+```
+
+而 `player_movement_check` 是原版 26.1 的正式游戏规则（`GameRules.PLAYER_MOVEMENT_CHECK`，
+默认 `true`）。在服务端执行：
+
+```
+/gamerule player_movement_check false
+```
+
+`shouldCheckPlayerMovement()` 会直接返回 `false`，**整段 moved-too-quickly 校验被跳过**，
+`!tp` 就能跨任意距离生效，也不会有服务端警告日志。这条：
+
+- 是**纯原版功能**，不需要插件、不需要数据包、不需要模组
+- 写在存档的 `level.dat` 里，**立即生效、不用重启**
+- 和 `allow-flight` 是两码事（后者只管「悬空超过 4 秒踢人」）
+
+关掉之后模组那个黄色距离提示就没意义了，用 `!config TeleportWarn = 0` 关掉即可。
+
+唯一剩下的限制：**传送到实心方块内部**仍然会被拒（走的是另一条 `moved wrongly` /
+`isEntityCollidingWithAnythingNew` 的碰撞检查，和这个 gamerule 无关），目标点要落在空气里。
 
 ## 安装
 
 1. 玩家安装 NeoForge **26.1.2.76**（或更高的 26.1.x）。
-2. 把 `doubletapfly-26.1.2-1.7.0.jar` 放进 `.minecraft/mods/`。
+2. 把 `doubletapfly-26.1.2-1.7.1.jar` 放进 `.minecraft/mods/`。
 3. 进入服务器，双击空格即可飞行；按住右键就是快速放置。
 
 ## 按键设置
@@ -245,7 +285,7 @@ Minecraft 原生的开关 / 滑块 / 列表，中英文标签和提示都做了�
 ```bash
 # 需要 JDK 25
 ./gradlew build
-# 产物：build/libs/doubletapfly-26.1.2-1.7.0.jar
+# 产物：build/libs/doubletapfly-26.1.2-1.7.1.jar
 ```
 
 开发环境里启动客户端：

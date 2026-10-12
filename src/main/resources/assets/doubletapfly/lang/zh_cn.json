@@ -92,7 +92,7 @@
   "doubletapfly.tp.player_unknown": "客户端不知道叫 %s 的玩家（只能是同维度、且在追踪范围内的）。",
   "doubletapfly.tp.label_home": "预设点",
   "doubletapfly.tp.done": "已传送到 %s（距离 %s 格）",
-  "doubletapfly.tp.remote_warning": "距离超过 %s 格。原版服务端把「单个移动包超过约 10 格」判定为 moved too quickly 并把你拉回原位 —— allow-flight 关不掉这个校验。",
+  "doubletapfly.tp.remote_warning": "距离超过 %s 格。原版服务端把「单 tick 移动超过约 10 格」判定为 moved too quickly 并把你拉回原位。在服务端执行 /gamerule player_movement_check false 即可关掉这条校验 —— allow-flight 关不掉它。",
 
   "doubletapfly.players.header": "玩家坐标（%s 人，按距离从近到远）",
   "doubletapfly.players.none": "当前客户端没有已知的其他玩家。",

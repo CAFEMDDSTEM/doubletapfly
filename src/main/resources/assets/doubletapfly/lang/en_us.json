@@ -92,7 +92,7 @@
   "doubletapfly.tp.player_unknown": "No player named %s is known to this client (same dimension and nearby only).",
   "doubletapfly.tp.label_home": "home",
   "doubletapfly.tp.done": "Teleported to %s (%s blocks)",
-  "doubletapfly.tp.remote_warning": "That is more than %s blocks. A vanilla server rejects moves longer than about 10 blocks per packet as \"moved too quickly\" and snaps you back - allow-flight does not disable that check.",
+  "doubletapfly.tp.remote_warning": "That is more than %s blocks. A vanilla server rejects moves longer than about 10 blocks per tick as moved-too-quickly and snaps you back. Run /gamerule player_movement_check false on the server to switch that check off - allow-flight does not affect it.",
 
   "doubletapfly.players.header": "Players (%s, nearest first)",
   "doubletapfly.players.none": "No other players known to this client right now.",
