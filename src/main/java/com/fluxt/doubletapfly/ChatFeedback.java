@@ -59,6 +59,11 @@ public final class ChatFeedback {
         send(Component.literal("  ").append(message));
     }
 
+    /** A message with no prefix and no colour of its own; the caller styles it. */
+    public static void plain(Component message) {
+        send(message);
+    }
+
     /** Green when the feature was switched on, red when it was switched off. */
     public static void reportToggle(boolean nowEnabled) {
         send(prefix()

@@ -73,6 +73,35 @@
   "doubletapfly.help.unknown_argument": "Unknown argument: %s",
   "doubletapfly.help.usage": "Type !doubletapfly help to see the command list.",
 
+  "doubletapfly.help.help_command": "feature guide: !help lists everything, !help <feature> explains one",
+  "doubletapfly.help.list.header": "Features (!help <feature> for the full how-to)",
+  "doubletapfly.help.list.tip": "For example: !help airplace   Chinese names work too, e.g. !help 悬空放置",
+  "doubletapfly.help.feature.unknown": "There is no feature called %s.",
+
+  "doubletapfly.help.feature.flight.title": "Double Tap Flight",
+  "doubletapfly.help.feature.flight.summary": "double-tap space to fly like creative mode, tap again or land to stop",
+  "doubletapfly.help.feature.flight.detail": "How to use:\n1. Double-tap space to take off, double-tap again or touch the ground to stop\n2. !doubletapfly switches the whole feature (green = on, red = off)\n3. !config FlySpeed = 2 changes the speed, 1 = vanilla creative speed\n4. Rebind the toggle in Options -> Controls\nOptions: Flight / FlySpeed / DoubleTapWindow / FallProtection\nRequires: allow-flight=true on the server, otherwise 4 seconds of hovering kicks you",
+
+  "doubletapfly.help.feature.fastplace.title": "Fast Block Placement",
+  "doubletapfly.help.feature.fastplace.summary": "drops the vanilla 4 tick cooldown between placements",
+  "doubletapfly.help.feature.fastplace.detail": "How to use:\n1. It is on by default: just hold right click and place away\n2. !fastplace switches it (green = on, red = off)\n3. !config PlaceDelay = 1 changes the delay, vanilla is 4, 1 means every tick\n4. !config PlacePerTick = 4 also fills the blocks around the one you aim at\nOptions: FastPlace / PlaceDelay / PlacePerTick\nWith a schematic: the projection tells you where, this makes it fast",
+
+  "doubletapfly.help.feature.airplace.title": "Air Place",
+  "doubletapfly.help.feature.airplace.summary": "place blocks in mid air, marked with a red box",
+  "doubletapfly.help.feature.airplace.detail": "How to use:\n1. Run !airplace first - it is off by default, wait for the green line\n2. Hold a block item (spawn eggs, armour stands and fireworks work too)\n3. Aim at nothing, so the crosshair is not pointing at a block\n4. A red box appears at the far end of your reach - that is the target\n5. Hold right click and the block lands there\nOptions: AirPlace / AirPlaceRender\nNo red box? Check the switch, the held item, and whether you are really aiming at air",
+
+  "doubletapfly.help.feature.fastuse.title": "Fast Use",
+  "doubletapfly.help.feature.fastuse.summary": "eat, drink and throw items faster",
+  "doubletapfly.help.feature.fastuse.detail": "How to use:\n1. On by default - food, ender pearls, potions and similar speed up on their own\n2. !fastuse switches it (green = on, red = off)\n3. !config FastUseCooldown = 0 changes the cooldown, vanilla is 4, 0 is fastest\nOptions: FastUse / FastUseCooldown\nNote: this only affects using items; block placement speed is !fastplace and is separate",
+
+  "doubletapfly.help.feature.players.title": "Player Coordinates",
+  "doubletapfly.help.feature.players.summary": "list the other players' positions and distances, click to copy",
+  "doubletapfly.help.feature.players.detail": "How to use:\n1. Run !players and the chat lists the other players, nearest first\n2. Each row is name - distance - coordinates, and both are click to copy\n3. !config PlayerListRange = 100 only shows players within 100 blocks, 0 = all\n4. !config PlayerListSelf = true also lists yourself\nOptions: PlayerListRange / PlayerListSelf\nLimit: only players in your dimension and inside the server's tracking range are known",
+
+  "doubletapfly.help.feature.tp.title": "Teleport",
+  "doubletapfly.help.feature.tp.summary": "move the local player straight to a position",
+  "doubletapfly.help.feature.tp.detail": "How to use:\n1. !tp              goes to the preset point (HomeX / HomeY / HomeZ)\n2. !tp Steve        goes to the player Steve\n3. !tp 128 64 -512  goes to those coordinates\n4. !config HomeX = 100 changes the preset; !config TeleportWarn = 0 silences the warning\nOptions: HomeX / HomeY / HomeZ / TeleportWarn\nLimit: a vanilla server only accepts about 10 blocks of movement per tick, longer jumps snap back\nFix: have the server run /gamerule player_movement_check false\nNote: teleporting into solid blocks is still refused, the target must be in the air",
+
   "doubletapfly.status.header": "Current settings",
   "doubletapfly.status.flight": "Flight: %s",
   "doubletapfly.status.double_tap_window": "Double-tap window: %s tick(s)",

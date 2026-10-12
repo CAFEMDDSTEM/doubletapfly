@@ -73,6 +73,35 @@
   "doubletapfly.help.unknown_argument": "未知的参数：%s",
   "doubletapfly.help.usage": "输入 !doubletapfly help 查看指令列表。",
 
+  "doubletapfly.help.help_command": "功能说明书：!help 列出全部，!help <功能名> 看详细用法",
+  "doubletapfly.help.list.header": "功能列表（!help <功能名> 看详细用法）",
+  "doubletapfly.help.list.tip": "例如：!help airplace   也可以输中文名，例如 !help 悬空放置",
+  "doubletapfly.help.feature.unknown": "没有叫 %s 的功能。",
+
+  "doubletapfly.help.feature.flight.title": "双击空格飞行",
+  "doubletapfly.help.feature.flight.summary": "双击空格像创造模式一样起飞，再双击或落地停止",
+  "doubletapfly.help.feature.flight.detail": "怎么用：\n1. 进游戏后双击空格起飞，再双击一次或落到地面即停止\n2. !doubletapfly 开关整个功能（绿=开，红=关）\n3. !config FlySpeed = 2 调飞行速度，1 = 原版创造速度\n4. 「选项 → 控制 → 按键控制」里可以改开关按键\n相关配置：Flight / FlySpeed / DoubleTapWindow / FallProtection\n前提：服务器要设 allow-flight=true，否则悬空超过 4 秒会被原版踢出",
+
+  "doubletapfly.help.feature.fastplace.title": "快速放置",
+  "doubletapfly.help.feature.fastplace.summary": "解除原版每 4 tick 才能放一个方块的冷却",
+  "doubletapfly.help.feature.fastplace.detail": "怎么用：\n1. 默认就是开着的，按住右键连续放方块即可\n2. !fastplace 开关（绿=开，红=关）\n3. !config PlaceDelay = 1 改放置间隔，原版是 4，1 = 每 tick 一次\n4. !config PlacePerTick = 4 一次多放几个，默认 1（只放准星指着的那个）\n相关配置：FastPlace / PlaceDelay / PlacePerTick\n配合投影：投影告诉你哪里要放，这个负责放得快",
+
+  "doubletapfly.help.feature.airplace.title": "悬空放置",
+  "doubletapfly.help.feature.airplace.summary": "对着空气也能放方块，位置用红框标出",
+  "doubletapfly.help.feature.airplace.detail": "怎么用：\n1. 先输入 !airplace 打开（默认关闭，看到绿字才算开）\n2. 手上拿方块，刷怪蛋 / 盔甲架 / 烟花也行\n3. 准星对着空气 —— 前方没有可点击的方块\n4. 能触及的最远处会出现红色方框，那就是要放的位置\n5. 按住右键，方块落到方框那一格\n相关配置：AirPlace / AirPlaceRender\n没看到红框就检查：开关有没有开、手上是不是方块、准星是不是其实指着方块",
+
+  "doubletapfly.help.feature.fastuse.title": "快速使用",
+  "doubletapfly.help.feature.fastuse.summary": "吃东西 / 扔珍珠 / 扔药水更快",
+  "doubletapfly.help.feature.fastuse.detail": "怎么用：\n1. 默认开着，用食物、末影珍珠、药水之类会自动变快\n2. !fastuse 开关（绿=开，红=关）\n3. !config FastUseCooldown = 0 改冷却，原版是 4，0 最快\n相关配置：FastUse / FastUseCooldown\n注意：只影响使用物品，放方块的速度是 !fastplace 管的，两者独立",
+
+  "doubletapfly.help.feature.players.title": "玩家坐标",
+  "doubletapfly.help.feature.players.summary": "列出其他玩家的坐标和距离，点击即可复制",
+  "doubletapfly.help.feature.players.detail": "怎么用：\n1. 输入 !players，聊天栏列出其他玩家，按距离从近到远\n2. 每行是 名字 · 距离 · 坐标，名字和坐标都能点击复制\n3. !config PlayerListRange = 100 只看 100 格内的，0 = 不限\n4. !config PlayerListSelf = true 把自己也列进去\n相关配置：PlayerListRange / PlayerListSelf\n限制：只能看到同维度、且在服务端追踪范围内的玩家",
+
+  "doubletapfly.help.feature.tp.title": "传送",
+  "doubletapfly.help.feature.tp.summary": "把本地玩家直接挪到指定位置",
+  "doubletapfly.help.feature.tp.detail": "怎么用：\n1. !tp              传送到预设点（HomeX / HomeY / HomeZ）\n2. !tp Steve        传送到玩家 Steve 那里\n3. !tp 128 64 -512  传送到指定坐标\n4. !config HomeX = 100 改预设点；!config TeleportWarn = 0 关掉距离警告\n相关配置：HomeX / HomeY / HomeZ / TeleportWarn\n限制：原版服务端只认单 tick 约 10 格以内的移动，超了会被拉回原位\n解决：让服主在服务端执行 /gamerule player_movement_check false 即可解除\n注意：传送到实心方块里仍会被拒，目标点要落在空气里",
+
   "doubletapfly.status.header": "当前设置",
   "doubletapfly.status.flight": "飞行：%s",
   "doubletapfly.status.double_tap_window": "双击判定窗口：%s tick",

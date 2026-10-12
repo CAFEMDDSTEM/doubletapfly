@@ -30,6 +30,7 @@ import org.jspecify.annotations.Nullable;
  *   <li>{@code !fastuse} - switch fast item use on/off</li>
  *   <li>{@code !players} - print the other players' positions and distances</li>
  *   <li>{@code !tp [player|x y z]} - move the local player to a point</li>
+ *   <li>{@code !help [feature]} - list the features, or explain one of them</li>
  *   <li>{@code !config <option> = <value>} - change any setting</li>
  * </ul>
  */
@@ -42,6 +43,7 @@ public final class ChatCommands {
     private static final String FAST_USE_COMMAND = "fastuse";
     private static final String PLAYERS_COMMAND = "players";
     private static final String TELEPORT_COMMAND = "tp";
+    private static final String HELP_COMMAND = "help";
     private static final String CONFIG_COMMAND = "config";
     private static final String HELP_ARGUMENT = "help";
     private static final String STATUS_ARGUMENT = "status";
@@ -132,6 +134,19 @@ public final class ChatCommands {
             event.setCanceled(true);
             ChatFeedback.echo(message);
             TeleportHelper.execute(argument);
+            return;
+        }
+
+        if (isCommand(body, HELP_COMMAND)) {
+            String argument = body.substring(HELP_COMMAND.length()).trim();
+            event.setCanceled(true);
+            ChatFeedback.echo(message);
+            if (argument.isEmpty()) {
+                FeatureHelp.sendList();
+            } else if (!FeatureHelp.sendFeature(argument)) {
+                ChatFeedback.failure(Component.translatable("doubletapfly.help.feature.unknown", argument));
+                FeatureHelp.sendList();
+            }
             return;
         }
 
@@ -447,6 +462,7 @@ public final class ChatCommands {
         ChatFeedback.helpLine("!doubletapfly help", Component.translatable("doubletapfly.help.help"));
         ChatFeedback.helpLine("!doubletapfly status", Component.translatable("doubletapfly.help.status"));
         ChatFeedback.helpLine("!doubletapfly gui", Component.translatable("doubletapfly.help.gui"));
+        ChatFeedback.helpLine("!help [功能名]", Component.translatable("doubletapfly.help.help_command"));
         ChatFeedback.helpLine("!fastplace", Component.translatable("doubletapfly.help.fast_place"));
         ChatFeedback.helpLine("!airplace", Component.translatable("doubletapfly.help.air_place"));
         ChatFeedback.helpLine("!fastuse", Component.translatable("doubletapfly.help.fast_use"));

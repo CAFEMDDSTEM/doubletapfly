@@ -6,7 +6,7 @@
 - NeoForge：**26.1.2.76**（要求 `[26.1.2.76,)`）
 - Java：**25**
 - 模组 ID：`doubletapfly`
-- 版本：**1.7.1**
+- 版本：**1.8.0**
 
 ## 功能一览
 
@@ -171,7 +171,7 @@ private boolean shouldCheckPlayerMovement(boolean isFallFlying) {
 ## 安装
 
 1. 玩家安装 NeoForge **26.1.2.76**（或更高的 26.1.x）。
-2. 把 `doubletapfly-26.1.2-1.7.1.jar` 放进 `.minecraft/mods/`。
+2. 把 `doubletapfly-26.1.2-1.8.0.jar` 放进 `.minecraft/mods/`。
 3. 进入服务器，双击空格即可飞行；按住右键就是快速放置。
 
 ## 按键设置
@@ -197,10 +197,14 @@ private boolean shouldCheckPlayerMovement(boolean isFallFlying) {
 
 | 指令 | 作用 |
 |---|---|
+| `!help` | 列出全部功能 |
+| `!help <功能名>` | 某个功能的详细介绍和使用步骤 |
 | `!doubletapfly` | 开关飞行（绿色 = 已开启，红色 = 已关闭）|
 | `!doubletapfly help` | 在聊天框打印完整指令表 |
 | `!doubletapfly status` | 打印当前所有设置（开/关用绿/红标出）|
 | `!doubletapfly gui` | 打开设置界面（和模组列表里那个「配置」是同一个）|
+| `!help` | 列出全部功能 |
+| `!help <功能名>` | 某个功能的详细介绍 + 使用方法 |
 | `!fastplace` | 开关快速放置（绿色 / 红色）|
 | `!airplace` | 开关悬空放置（绿色 / 红色）|
 | `!fastuse` | 开关快速使用（绿色 / 红色）|
@@ -285,7 +289,7 @@ Minecraft 原生的开关 / 滑块 / 列表，中英文标签和提示都做了�
 ```bash
 # 需要 JDK 25
 ./gradlew build
-# 产物：build/libs/doubletapfly-26.1.2-1.7.1.jar
+# 产物：build/libs/doubletapfly-26.1.2-1.8.0.jar
 ```
 
 开发环境里启动客户端：
