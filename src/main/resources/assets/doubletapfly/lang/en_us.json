@@ -31,6 +31,10 @@
   "doubletapfly.message.fast_use_cooldown": "Item use cooldown set to %s tick(s)",
   "doubletapfly.message.player_list_range": "Player list range set to %s (0 = no limit)",
   "doubletapfly.message.player_list_self": "List yourself: %s",
+  "doubletapfly.message.home_x": "Home X set to %s",
+  "doubletapfly.message.home_y": "Home Y set to %s",
+  "doubletapfly.message.home_z": "Home Z set to %s",
+  "doubletapfly.message.teleport_warn": "Teleport warning distance set to %s blocks",
   "doubletapfly.message.value.clamped": "Value out of range, clamped to %s - %s",
   "doubletapfly.message.option.unknown": "Unknown option: %s",
   "doubletapfly.message.option.invalid_boolean": "Expected true or false, got: %s",
@@ -46,6 +50,7 @@
   "doubletapfly.help.air_place": "turn air place on / off (place blocks in mid air)",
   "doubletapfly.help.fast_use": "turn fast item use on / off",
   "doubletapfly.help.players": "print every known player's position and distance",
+  "doubletapfly.help.tp": "teleport: bare = home point, a name = that player, three numbers = coordinates",
   "doubletapfly.help.config_intro": "change a setting, available options:",
   "doubletapfly.help.flight": "flight master switch",
   "doubletapfly.help.fly_speed": "flight speed multiplier (0.1 - 10)",
@@ -62,6 +67,8 @@
   "doubletapfly.help.fast_use_cooldown": "cooldown after using an item (0 - 4)",
   "doubletapfly.help.player_list_range": "only list players closer than this (0 - 512, 0 = all)",
   "doubletapfly.help.player_list_self": "include yourself in the list (true / false)",
+  "doubletapfly.help.home": "the preset point a bare !tp uses",
+  "doubletapfly.help.teleport_warn": "warn when a !tp is longer than this (0 - 1000, 0 = off)",
   "doubletapfly.help.tip": "Everything above is handled locally and never sent to the server.",
   "doubletapfly.help.unknown_argument": "Unknown argument: %s",
   "doubletapfly.help.usage": "Type !doubletapfly help to see the command list.",
@@ -78,6 +85,14 @@
   "doubletapfly.status.air_place": "Air place: %s (highlight %s)",
   "doubletapfly.status.fast_use": "Fast use: %s (cooldown %s tick(s))",
   "doubletapfly.status.player_list": "Player list: range %s (0 = all), include self %s",
+  "doubletapfly.status.teleport": "Teleport: home %s, warning over %s blocks",
+
+  "doubletapfly.tp.no_world": "You are not in a world.",
+  "doubletapfly.tp.usage": "Usage: !tp | !tp <player> | !tp <x> <y> <z>",
+  "doubletapfly.tp.player_unknown": "No player named %s is known to this client (same dimension and nearby only).",
+  "doubletapfly.tp.label_home": "home",
+  "doubletapfly.tp.done": "Teleported to %s (%s blocks)",
+  "doubletapfly.tp.remote_warning": "That is more than %s blocks. A vanilla server rejects moves longer than about 10 blocks per packet as \"moved too quickly\" and snaps you back - allow-flight does not disable that check.",
 
   "doubletapfly.players.header": "Players (%s, nearest first)",
   "doubletapfly.players.none": "No other players known to this client right now.",
@@ -113,5 +128,11 @@
 
   "doubletapfly.config.section.player_list": "Player list",
   "doubletapfly.config.player_list_range": "Range (0 = no limit)",
-  "doubletapfly.config.player_list_self": "Include yourself"
+  "doubletapfly.config.player_list_self": "Include yourself",
+
+  "doubletapfly.config.section.teleport": "Teleport",
+  "doubletapfly.config.home_x": "Home X",
+  "doubletapfly.config.home_y": "Home Y",
+  "doubletapfly.config.home_z": "Home Z",
+  "doubletapfly.config.teleport_warn": "Warn over this distance (0 = off)"
 }

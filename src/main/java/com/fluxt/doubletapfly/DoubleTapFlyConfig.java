@@ -23,6 +23,10 @@ public final class DoubleTapFlyConfig {
     public static final int MAX_USE_COOLDOWN = 4;
     public static final double MIN_PLAYER_LIST_RANGE = 0.0D;
     public static final double MAX_PLAYER_LIST_RANGE = 512.0D;
+    public static final double MIN_TELEPORT_WARN = 0.0D;
+    public static final double MAX_TELEPORT_WARN = 1000.0D;
+    /** Vanilla kicks a move packet that covers more than this, see below. */
+    public static final double VANILLA_MOVE_LIMIT = 10.0D;
 
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.BooleanValue ENABLED;
@@ -40,6 +44,10 @@ public final class DoubleTapFlyConfig {
     public static final ModConfigSpec.IntValue FAST_USE_COOLDOWN;
     public static final ModConfigSpec.DoubleValue PLAYER_LIST_RANGE;
     public static final ModConfigSpec.BooleanValue PLAYER_LIST_SELF;
+    public static final ModConfigSpec.DoubleValue TELEPORT_HOME_X;
+    public static final ModConfigSpec.DoubleValue TELEPORT_HOME_Y;
+    public static final ModConfigSpec.DoubleValue TELEPORT_HOME_Z;
+    public static final ModConfigSpec.DoubleValue TELEPORT_WARN_DISTANCE;
 
     static {
         ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
@@ -151,6 +159,35 @@ public final class DoubleTapFlyConfig {
                 .comment("Also list yourself.")
                 .translation("doubletapfly.config.player_list_self")
                 .define("include_self", false);
+        builder.pop();
+
+        builder.comment(
+                "Teleport (!tp). The target position is applied to the local player directly, and the",
+                "client reports it to the server on the next tick.",
+                "IMPORTANT: a vanilla server rejects any single move packet that covers more than about",
+                "10 blocks (\"moved too quickly\", ServerGamePacketListenerImpl) and snaps the player",
+                "back. allow-flight does NOT turn that check off. Short hops work, long jumps do not.",
+                "The home coordinates below are what a bare !tp uses; the client has no way to learn",
+                "the server's real spawn point.")
+                .translation("doubletapfly.config.section.teleport")
+                .push("teleport");
+        TELEPORT_HOME_X = builder
+                .comment("Home X for a bare !tp.")
+                .translation("doubletapfly.config.home_x")
+                .defineInRange("home_x", 0.0D, -30000000.0D, 30000000.0D);
+        TELEPORT_HOME_Y = builder
+                .comment("Home Y for a bare !tp.")
+                .translation("doubletapfly.config.home_y")
+                .defineInRange("home_y", 64.0D, -2048.0D, 2048.0D);
+        TELEPORT_HOME_Z = builder
+                .comment("Home Z for a bare !tp.")
+                .translation("doubletapfly.config.home_z")
+                .defineInRange("home_z", 0.0D, -30000000.0D, 30000000.0D);
+        TELEPORT_WARN_DISTANCE = builder
+                .comment("Warn in chat when a teleport is longer than this many blocks,",
+                        "because the server will very likely snap you back. 0 turns the warning off.")
+                .translation("doubletapfly.config.teleport_warn")
+                .defineInRange("warn_distance", VANILLA_MOVE_LIMIT, MIN_TELEPORT_WARN, MAX_TELEPORT_WARN);
         builder.pop();
 
         SPEC = builder.build();
@@ -338,5 +375,37 @@ public final class DoubleTapFlyConfig {
 
     public static void setPlayerListIncludeSelf(boolean include) {
         write(PLAYER_LIST_SELF, include);
+    }
+
+    public static double teleportHomeX() {
+        return readDouble(TELEPORT_HOME_X, 0.0D);
+    }
+
+    public static void setTeleportHomeX(double x) {
+        write(TELEPORT_HOME_X, x);
+    }
+
+    public static double teleportHomeY() {
+        return readDouble(TELEPORT_HOME_Y, 64.0D);
+    }
+
+    public static void setTeleportHomeY(double y) {
+        write(TELEPORT_HOME_Y, y);
+    }
+
+    public static double teleportHomeZ() {
+        return readDouble(TELEPORT_HOME_Z, 0.0D);
+    }
+
+    public static void setTeleportHomeZ(double z) {
+        write(TELEPORT_HOME_Z, z);
+    }
+
+    public static double teleportWarnDistance() {
+        return readDouble(TELEPORT_WARN_DISTANCE, VANILLA_MOVE_LIMIT);
+    }
+
+    public static void setTeleportWarnDistance(double blocks) {
+        write(TELEPORT_WARN_DISTANCE, blocks);
     }
 }

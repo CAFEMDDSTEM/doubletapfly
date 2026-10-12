@@ -6,7 +6,7 @@
 - NeoForge：**26.1.2.76**（要求 `[26.1.2.76,)`）
 - Java：**25**
 - 模组 ID：`doubletapfly`
-- 版本：**1.6.0**
+- 版本：**1.7.0**
 
 ## 功能一览
 
@@ -15,6 +15,7 @@
 - **悬空放置** —— 对着空气也能放方块，选中位置用红色方框标出。
 - **快速使用** —— 吃东西 / 扔末影珍珠 / 扔药水更快，和放方块分开控制。
 - **玩家坐标** —— 在聊天栏列出其他玩家的坐标和离你的距离，坐标**点击即可复制**。
+- **传送** —— `!tp` / `!tp 玩家名` / `!tp x y z`，直接改本地玩家坐标。**注意原版服务端只接受约 10 格以内的单包移动**，详见下文。
 - **可自定义按键** —— 「选项 → 控制 → 按键控制」里多出「双击空格飞行」分类。
 - **指令为主** —— 所有设置都能用聊天指令改和查：`!doubletapfly help` / `status`、`!fastplace`、`!config ...`。
 - **原生设置界面** —— 用的是 NeoForge 自带、由配置自动生成的 Minecraft 原生界面（不是自制 GUI），也可以随时用指令解决。
@@ -90,10 +91,47 @@ NeoForge 上要用它的非官方移植：
 两点限制要说清楚：客户端只能拿到**同维度**、且**在服务端追踪范围内**（原版默认是玩家周边
 几十格，服务器可调）的玩家实体，超出这个范围的玩家客户端根本不知道他们在哪，所以列不出来。
 
+## 六、传送（!tp）
+
+```
+!tp                  → 传送到预设点（HomeX / HomeY / HomeZ）
+!tp Steve            → 传送到玩家 Steve 的位置
+!tp 128 64 -512      → 传送到指定坐标
+```
+
+实现就是直接改本地玩家坐标（`setPos`），客户端下一个 tick 会把新位置照常打包发给服务端。
+
+> ### ⚠️ 重要限制：原版只认约 10 格以内的单包移动
+>
+> `ServerGamePacketListenerImpl#handleMovePlayer` 里有这么一段：
+>
+> ```java
+> double movedDist = xDist*xDist + yDist*yDist + zDist*zDist;   // 平方距离
+> float metersPerTick = isFallFlying ? 300.0F : 100.0F;
+> if (movedDist - expectedDist > metersPerTick * deltaPackets) {
+>     LOGGER.warn("{} moved too quickly! ...");
+>     this.teleport(player.getX(), player.getY(), player.getZ(), ...);   // 拉回原位
+>     return;
+> }
+> ```
+>
+> `movedDist` 是**平方**距离，阈值却只有 `100` —— 所以真正允许的是 `sqrt(100) = 10 格`。
+> 超过这个距离，服务端会记一条 `moved too quickly` 并**把你拉回原地**。
+>
+> **并且 `allow-flight=true` 关不掉这个校验** —— 它只管「悬空超过 4 秒踢人」那一条，
+> 跟移动距离校验是两个独立的检查。服务端只要还是原版（或 Paper/Spigot），这条就一定在。
+>
+> 所以：**近距离（10 格内）能过，远距离会被拉回**。模组会在距离超阈值时于聊天栏给出黄色提示
+> （阈值可用 `!config TeleportWarn = 100` 调整，0 关闭）。
+
+如果目标是「让非 OP 玩家能真正远距离传送」，纯客户端做不到 —— 需要服务端配合。
+在原版服务端上最轻量的做法是**数据包（datapack）+ `/trigger`**：给玩家一个记分板触发器，
+玩家用 `/trigger` 提交坐标，函数再执行 `/tp`。数据包不需要插件、不需要模组，vanilla 客户端也能用。
+
 ## 安装
 
 1. 玩家安装 NeoForge **26.1.2.76**（或更高的 26.1.x）。
-2. 把 `doubletapfly-26.1.2-1.6.0.jar` 放进 `.minecraft/mods/`。
+2. 把 `doubletapfly-26.1.2-1.7.0.jar` 放进 `.minecraft/mods/`。
 3. 进入服务器，双击空格即可飞行；按住右键就是快速放置。
 
 ## 按键设置
@@ -127,6 +165,9 @@ NeoForge 上要用它的非官方移植：
 | `!airplace` | 开关悬空放置（绿色 / 红色）|
 | `!fastuse` | 开关快速使用（绿色 / 红色）|
 | `!players` | 打印已知玩家的坐标和距离 |
+| `!tp` | 传送到预设点 |
+| `!tp <玩家名>` | 传送到该玩家 |
+| `!tp <x> <y> <z>` | 传送到指定坐标 |
 | `!config Flight = true` | 飞行总开关（等同 `!doubletapfly`）|
 | `!config FlySpeed = 1` | 飞行速度倍率（0.1 ~ 10，1 = 原版创造速度）|
 | `!config DoubleTapWindow = 7` | 双击判定窗口 tick（2 ~ 20）|
@@ -142,6 +183,8 @@ NeoForge 上要用它的非官方移植：
 | `!config FastUseCooldown = 0` | 使用物品后的冷却 tick（0 ~ 4，原版是 4）|
 | `!config PlayerListRange = 0` | 只列出这个距离内的玩家（0 ~ 512，0 = 不限）|
 | `!config PlayerListSelf = false` | 列表中是否包含自己（true / false）|
+| `!config HomeX / HomeY / HomeZ = 0 64 0` | `!tp` 不带参数时去的预设点 |
+| `!config TeleportWarn = 10` | 超过多少格就在聊天栏警告（0 = 不警告）|
 
 数值超出范围会自动收进范围并给黄色提示；指令写错会给红色错误，并提示你输入 `!doubletapfly help`。
 所有设置都会立刻生效并写回配置文件。
@@ -202,7 +245,7 @@ Minecraft 原生的开关 / 滑块 / 列表，中英文标签和提示都做了�
 ```bash
 # 需要 JDK 25
 ./gradlew build
-# 产物：build/libs/doubletapfly-26.1.2-1.6.0.jar
+# 产物：build/libs/doubletapfly-26.1.2-1.7.0.jar
 ```
 
 开发环境里启动客户端：

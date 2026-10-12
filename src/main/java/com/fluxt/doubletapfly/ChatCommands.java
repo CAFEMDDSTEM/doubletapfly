@@ -1,6 +1,7 @@
 package com.fluxt.doubletapfly;
 
 import java.util.Locale;
+import java.util.function.DoubleConsumer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
@@ -28,6 +29,7 @@ import org.jspecify.annotations.Nullable;
  *   <li>{@code !airplace} - switch air place on/off</li>
  *   <li>{@code !fastuse} - switch fast item use on/off</li>
  *   <li>{@code !players} - print the other players' positions and distances</li>
+ *   <li>{@code !tp [player|x y z]} - move the local player to a point</li>
  *   <li>{@code !config <option> = <value>} - change any setting</li>
  * </ul>
  */
@@ -39,6 +41,7 @@ public final class ChatCommands {
     private static final String AIR_PLACE_COMMAND = "airplace";
     private static final String FAST_USE_COMMAND = "fastuse";
     private static final String PLAYERS_COMMAND = "players";
+    private static final String TELEPORT_COMMAND = "tp";
     private static final String CONFIG_COMMAND = "config";
     private static final String HELP_ARGUMENT = "help";
     private static final String STATUS_ARGUMENT = "status";
@@ -124,6 +127,14 @@ public final class ChatCommands {
             return;
         }
 
+        if (isCommand(body, TELEPORT_COMMAND)) {
+            String argument = body.substring(TELEPORT_COMMAND.length()).trim();
+            event.setCanceled(true);
+            ChatFeedback.echo(message);
+            TeleportHelper.execute(argument);
+            return;
+        }
+
         if (isCommand(body, CONFIG_COMMAND)) {
             event.setCanceled(true);
             ChatFeedback.echo(message);
@@ -192,6 +203,10 @@ public final class ChatCommands {
             case "fastusecooldown" -> setFastUseCooldown(value);
             case "playerlistrange" -> setPlayerListRange(value);
             case "playerlistself" -> setPlayerListSelf(value);
+            case "homex" -> setHomeX(value);
+            case "homey" -> setHomeY(value);
+            case "homez" -> setHomeZ(value);
+            case "teleportwarn" -> setTeleportWarn(value);
             default -> ChatFeedback.failure(
                     Component.translatable("doubletapfly.message.option.unknown", option));
         }
@@ -388,6 +403,42 @@ public final class ChatCommands {
         ChatFeedback.success(Component.translatable("doubletapfly.message.player_list_self", onOff(value)));
     }
 
+    private static void setHomeX(String rawValue) {
+        setHomeCoordinate(rawValue, "doubletapfly.message.home_x", DoubleTapFlyConfig::setTeleportHomeX);
+    }
+
+    private static void setHomeY(String rawValue) {
+        setHomeCoordinate(rawValue, "doubletapfly.message.home_y", DoubleTapFlyConfig::setTeleportHomeY);
+    }
+
+    private static void setHomeZ(String rawValue) {
+        setHomeCoordinate(rawValue, "doubletapfly.message.home_z", DoubleTapFlyConfig::setTeleportHomeZ);
+    }
+
+    private static void setHomeCoordinate(String rawValue, String messageKey,
+            DoubleConsumer setter) {
+        Double value = parseDouble(rawValue);
+        if (value == null) {
+            invalidNumber(rawValue);
+            return;
+        }
+        setter.accept(value);
+        ChatFeedback.success(Component.translatable(messageKey, format(value)));
+    }
+
+    private static void setTeleportWarn(String rawValue) {
+        Double value = parseDouble(rawValue);
+        if (value == null) {
+            invalidNumber(rawValue);
+            return;
+        }
+
+        double clamped = clamp(value, DoubleTapFlyConfig.MIN_TELEPORT_WARN,
+                DoubleTapFlyConfig.MAX_TELEPORT_WARN);
+        DoubleTapFlyConfig.setTeleportWarnDistance(clamped);
+        ChatFeedback.success(Component.translatable("doubletapfly.message.teleport_warn", format(clamped)));
+    }
+
     // -------------------------------------------------------------------- help
 
     private static void sendHelp() {
@@ -400,6 +451,8 @@ public final class ChatCommands {
         ChatFeedback.helpLine("!airplace", Component.translatable("doubletapfly.help.air_place"));
         ChatFeedback.helpLine("!fastuse", Component.translatable("doubletapfly.help.fast_use"));
         ChatFeedback.helpLine("!players", Component.translatable("doubletapfly.help.players"));
+        ChatFeedback.helpLine("!tp / !tp <player> / !tp <x> <y> <z>",
+                Component.translatable("doubletapfly.help.tp"));
         ChatFeedback.helpLine("!config <option> = <value>",
                 Component.translatable("doubletapfly.help.config_intro"));
         ChatFeedback.helpLine("  FlySpeed = 1", Component.translatable("doubletapfly.help.fly_speed"));
@@ -423,6 +476,10 @@ public final class ChatCommands {
                 Component.translatable("doubletapfly.help.player_list_range"));
         ChatFeedback.helpLine("  PlayerListSelf = false",
                 Component.translatable("doubletapfly.help.player_list_self"));
+        ChatFeedback.helpLine("  HomeX / HomeY / HomeZ = 0 64 0",
+                Component.translatable("doubletapfly.help.home"));
+        ChatFeedback.helpLine("  TeleportWarn = 10",
+                Component.translatable("doubletapfly.help.teleport_warn"));
         ChatFeedback.helpLine("  Flight = true", Component.translatable("doubletapfly.help.flight"));
         ChatFeedback.tip(Component.translatable("doubletapfly.help.tip"));
     }
@@ -453,6 +510,10 @@ public final class ChatCommands {
         ChatFeedback.statusLine(Component.translatable("doubletapfly.status.player_list",
                 format(DoubleTapFlyConfig.playerListRange()),
                 onOff(DoubleTapFlyConfig.playerListIncludeSelf())));
+        ChatFeedback.statusLine(Component.translatable("doubletapfly.status.teleport",
+                format(DoubleTapFlyConfig.teleportHomeX()) + " " + format(DoubleTapFlyConfig.teleportHomeY())
+                        + " " + format(DoubleTapFlyConfig.teleportHomeZ()),
+                format(DoubleTapFlyConfig.teleportWarnDistance())));
     }
 
     private static void unknownArgument(String argument) {
